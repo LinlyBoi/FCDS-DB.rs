@@ -4,10 +4,10 @@ use crate::schema::*;
 
 
 //Admins
-#[derive(Queryable,Debug,AsChangeset)]
+#[derive(Queryable,Debug,AsChangeset,Identifiable)]
 pub 
 struct Admin {
-    pub ssn: i32,
+    pub id: i32,
     pub name: String,
     pub address: String
 }
@@ -15,20 +15,23 @@ struct Admin {
 #[diesel(table_name = admins)]
 pub 
 struct NewAdmin {
-    pub ssn: i32,
+    pub id: i32,
     pub name: String,
     pub address: String
 }
+#[derive(Queryable,AsChangeset,Associations)]
+#[diesel(belongs_to(Admin))]
 pub struct AdminEmail {
-    pub admin: i32,
+    pub admin_id: i32,
     pub email: String,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable,Associations)]
+#[diesel(belongs_to(Admin))]
 #[diesel(table_name = admin_emails)]
-struct NewAdminEmail<'a> {
-    pub admin: &'a i32,
-    pub email: &'a String,
+pub struct NewAdminEmail<'a> {
+    pub admin_id: &'a i32,
+    pub email: &'a str,
 }
 //Ticket things
 #[derive(Queryable)]
@@ -44,6 +47,23 @@ pub struct Ticket {
 pub struct NewTicket<'a> {
     pub category: &'a str,
     pub description: &'a str,
+}
+
+#[derive(Insertable)]
+#[diesel(table_name = issued_tickets)]
+pub struct IssuedTicket {
+    ticket: i32,
+    vehicle: String,
+    driver: Option<i32>,
+    officer: i32,
+}
+#[derive(Insertable)]
+#[diesel(table_name = auto_issued_tickets)]
+pub struct AutoIssuedTicket {
+    ticket: i32,
+    vehicle: String,
+    driver: Option<i32>,
+    radar: i32,
 }
 
 //Vehicles

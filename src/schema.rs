@@ -1,15 +1,15 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    admin_emails (admin, email) {
-        admin -> Int4,
+    admin_emails (admin_id, email) {
+        admin_id -> Int4,
         email -> Text,
     }
 }
 
 diesel::table! {
-    admins (ssn) {
-        ssn -> Int4,
+    admins (id) {
+        id -> Int4,
         name -> Text,
         address -> Text,
     }
@@ -32,8 +32,8 @@ diesel::table! {
 }
 
 diesel::table! {
-    drivers (ssn) {
-        ssn -> Int4,
+    drivers (id) {
+        id -> Int4,
         name -> Text,
         address -> Text,
         reg_date -> Date,
@@ -67,7 +67,7 @@ diesel::table! {
 diesel::table! {
     officers (badge_num) {
         badge_num -> Int4,
-        ssn -> Text,
+        id -> Text,
         jurisdiction -> Nullable<Text>,
     }
 }
@@ -102,7 +102,7 @@ diesel::table! {
     }
 }
 
-diesel::joinable!(admin_emails -> admins (admin));
+diesel::joinable!(admin_emails -> admins (admin_id));
 diesel::joinable!(auto_issued_tickets -> drivers (driver));
 diesel::joinable!(auto_issued_tickets -> radars (radar));
 diesel::joinable!(auto_issued_tickets -> tickets (ticket));
