@@ -31,7 +31,7 @@ pub fn addmail(connection: &mut PgConnection, admin_email: NewAdminEmail)
 pub fn listadminmails(connection: &mut PgConnection)
 {
     use crate::schema::admin_emails::dsl::*;
-    let results = admin_emails.load::<AdminEmail>(connection).expect("KANKER NEJKHER");
+    let results = admin_emails.load::<AdminEmail>(connection).expect("hecc D:");
     for addmail in results
     {
             println!("{} {}", addmail.email , addmail.admin_id);
