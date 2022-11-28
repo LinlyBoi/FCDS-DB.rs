@@ -59,11 +59,11 @@ pub struct IssuedTicket {
 }
 #[derive(Insertable)]
 #[diesel(table_name = auto_issued_tickets)]
-pub struct AutoIssuedTicket {
-    ticket: i32,
-    vehicle: String,
+pub struct AutoIssuedTicket<'a> {
+    ticket: &'a i32,
+    vehicle: &'a str,
     driver: Option<i32>,
-    radar: i32,
+    radar: &'a i32,
 }
 
 //Vehicles

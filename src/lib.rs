@@ -6,6 +6,7 @@ pub mod models;
 pub mod schema;
 pub mod admin_data;
 pub mod ticket_data;
+pub mod driver_data;
 
 //boiler plate :D
 pub fn establish_connection() -> PgConnection {
