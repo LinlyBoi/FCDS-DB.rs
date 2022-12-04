@@ -4,17 +4,17 @@ use crate::models::{Admin,NewAdmin,NewAdminEmail, AdminEmail};
 pub fn listadmins(connection: &mut PgConnection)
 {
     use crate::schema::admins::dsl::*;
-    let results = admins.load::<Admin>(connection).expect("KANKER");
-    for admin in results 
+    let query = admins.load::<Admin>(connection).expect("KANKER");
+    for admin in query 
     {
         println!("{} {}",admin.name ,admin.address);
     }
 }
-pub fn addmin(connection: &mut PgConnection, admin: NewAdmin)
+pub fn addmin(connection: &mut PgConnection, new_admin: NewAdmin)
 {
     use crate::schema::admins::dsl::*;
     diesel::insert_into(admins)
-        .values(&admin)
+        .values(&new_admin)
         .execute(connection)
         .expect("LOL DEAD NOT WORKING INSERTION");
 
@@ -35,5 +35,5 @@ pub fn listadminmails(connection: &mut PgConnection)
     for addmail in results
     {
             println!("{} {}", addmail.email , addmail.admin_id);
-        }
+    }
 }
