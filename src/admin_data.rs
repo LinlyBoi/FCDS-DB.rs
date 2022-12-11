@@ -1,14 +1,13 @@
 use diesel::prelude::*;
 use crate::models::{Admin,NewAdmin,NewAdminEmail, AdminEmail};
 
-pub fn listadmins(connection: &mut PgConnection)
+pub fn listadmins(connection: &mut PgConnection) -> String
 {
     use crate::schema::admins::dsl::*;
     let query = admins.load::<Admin>(connection).expect("KANKER");
-    for admin in query 
-    {
-        println!("{} {}",admin.name ,admin.address);
-    }
+    let admin_list = query.iter().map(|admin| 
+        format!("{} {}\n",admin.name ,admin.address)).collect();
+   return admin_list;
 }
 pub fn addmin(connection: &mut PgConnection, new_admin: NewAdmin)
 {

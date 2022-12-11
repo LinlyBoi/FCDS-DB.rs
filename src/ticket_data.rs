@@ -1,5 +1,6 @@
 use diesel::prelude::*;
 use crate::models::{NewTicket,Ticket,IssuedTicket, AutoIssuedTicket};
+use common::CommonTicket;
 
 pub fn create_ticket(connection: &mut PgConnection,ticket: NewTicket)
 {
@@ -20,6 +21,15 @@ pub fn get_tickets(connection: &mut PgConnection)
     }
         
 
+}
+
+pub fn get_latest_ticket(connection: &mut PgConnection) -> String
+{
+    use crate::schema::tickets::dsl::*;
+    format!("Ticket description: {}",tickets.limit(1).load::<Ticket>(connection).expect("no tickets  :(")[0].description)
+    // return CommonTicket { id: latest_ticket.id,
+    //     category: latest_ticket.category,
+    //     description: (latest_ticket.description) };
 }
 
 pub fn issue_ticket(connection: &mut PgConnection,issued_ticket: IssuedTicket)

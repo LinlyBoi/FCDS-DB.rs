@@ -9,7 +9,6 @@ pub mod ticket_data;
 pub mod radar_data;
 pub mod vehicle_data;
 pub mod driver_data;
-pub mod args;
 
 //boiler plate :D
 pub fn establish_connection() -> PgConnection {

@@ -1,18 +1,26 @@
 
-use database_connection::admin_data::listadmins;
-use database_connection::driver_data::listdrivers;
-use database_connection::establish_connection;
-use database_connection::args::FCDBArgs;
-use clap::Parser;
-fn main() {
-    let connection = &mut establish_connection();
-    let args: FCDBArgs = FCDBArgs::parse();
-    match args.command.as_str() {
-        "admins" => listadmins(connection),
-        "drivers" => listdrivers(connection),
-        _ => println!("You think this is funny?"),
-    }
+use backend::admin_data::listadmins;
+use backend::driver_data::listdrivers;
+use backend::establish_connection;
+use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 
+#[get("/ggsya")]
+async fn ggsya() -> impl Responder {
+    HttpResponse::Ok().body("Ggsya is here")
+}
+#[get("/admins")]
+async fn admins() -> impl Responder {
 
-    }
-
+    HttpResponse::Ok().body(listadmins(&mut establish_connection()))
+}
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .service(ggsya)
+            .service(admins)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}

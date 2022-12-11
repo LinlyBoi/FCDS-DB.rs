@@ -1,5 +1,5 @@
 [package]
-name = "database_connection"
+name = "backend"
 version = "0.1.0"
 edition = "2021"
 default-run = "main"
@@ -10,4 +10,7 @@ default-run = "main"
 diesel = { version = "2.0.0",features = ["postgres"] }
 dotenvy = "0.15"
 chrono = "0.2.25"
-clap = {version = "4.0.29",features=["derive"]}
+common = { path = "../common"}
+tokio = { version = "1.17.0", features = ["full"] }
+actix-web = "4.0.0-rc.1"
+yew = { version = "0.20.0", features = ["csr"] }
